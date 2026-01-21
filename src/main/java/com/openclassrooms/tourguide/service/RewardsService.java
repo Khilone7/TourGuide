@@ -1,6 +1,7 @@
 package com.openclassrooms.tourguide.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -53,6 +54,17 @@ public class RewardsService {
 	
 	public boolean isWithinAttractionProximity(Attraction attraction, Location location) {
 		return getDistance(attraction, location) > attractionProximityRange ? false : true;
+	}
+
+	public List<Attraction> getFiveClosestAttractions(VisitedLocation visitedLocation) {
+		List<Map.Entry<Attraction, Double>> attractionDistances = gpsUtil.getAttractions().stream()
+				.map(attraction -> Map.entry(attraction, getDistance(attraction, visitedLocation.location)))
+				.sorted(Map.Entry.comparingByValue())
+				.limit(5)
+				.toList();
+		return attractionDistances.stream()
+				.map(Map.Entry::getKey)
+				.toList();
 	}
 	
 	private boolean nearAttraction(VisitedLocation visitedLocation, Attraction attraction) {
