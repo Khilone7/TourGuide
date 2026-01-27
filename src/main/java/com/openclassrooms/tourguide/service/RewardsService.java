@@ -6,6 +6,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.openclassrooms.tourguide.service.record.ClosestAttraction;
 import org.springframework.stereotype.Service;
 
 import gpsUtil.GpsUtil;
@@ -71,14 +72,20 @@ public class RewardsService {
         return getDistance(attraction, location) > attractionProximityRange ? false : true;
     }
 
-    public List<Attraction> getFiveClosestAttractions(VisitedLocation visitedLocation) {
-        List<Map.Entry<Attraction, Double>> attractionDistances = gpsUtil.getAttractions().stream()
+    public List<ClosestAttraction> getFiveClosestAttractions(VisitedLocation visitedLocation, User user) {
+
+        return gpsUtil.getAttractions().stream()
                 .map(attraction -> Map.entry(attraction, getDistance(attraction, visitedLocation.location)))
                 .sorted(Map.Entry.comparingByValue())
                 .limit(5)
-                .toList();
-        return attractionDistances.stream()
-                .map(Map.Entry::getKey)
+                .map(entry -> {
+                    Attraction a = entry.getKey();
+                    double distance = entry.getValue();
+
+                    return new ClosestAttraction(a.attractionName, a.latitude, a.longitude,
+                            visitedLocation.location.latitude, visitedLocation.location.longitude,
+                            distance, getRewardPoints(a, user));
+                })
                 .toList();
     }
 
