@@ -3,7 +3,6 @@ package com.openclassrooms.tourguide;
 import java.util.List;
 
 import com.openclassrooms.tourguide.service.record.ClosestAttraction;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,9 +18,12 @@ import tripPricer.Provider;
 @RestController
 public class TourGuideController {
 
-	@Autowired
-	TourGuideService tourGuideService;
-	
+	private final TourGuideService tourGuideService;
+
+    public TourGuideController(TourGuideService tourGuideService) {
+        this.tourGuideService = tourGuideService;
+    }
+
     @RequestMapping("/")
     public String index() {
         return "Greetings from TourGuide!";
