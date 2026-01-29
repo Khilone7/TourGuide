@@ -13,6 +13,9 @@ jobs:
           java-version: '17'
           cache: maven
       - run: chmod +x mvnw
+      - run: ./mvnw install:install-file -Dfile=libs/gpsUtil.jar -DgroupId=gpsUtil -DartifactId=gpsUtil -Dversion=1.0.0 -Dpackaging=jar
+      - run: ./mvnw install:install-file -Dfile=libs/RewardCentral.jar -DgroupId=rewardCentral -DartifactId=rewardCentral -Dversion=1.0.0 -Dpackaging=jar
+      - run: ./mvnw install:install-file -Dfile=libs/TripPricer.jar -DgroupId=tripPricer -DartifactId=tripPricer -Dversion=1.0.0 -Dpackaging=jar
       - run: ./mvnw compile
 
   test_job:
@@ -27,6 +30,9 @@ jobs:
           java-version: '17'
           cache: maven
       - run: chmod +x mvnw
+      - run: ./mvnw install:install-file -Dfile=libs/gpsUtil.jar -DgroupId=gpsUtil -DartifactId=gpsUtil -Dversion=1.0.0 -Dpackaging=jar
+      - run: ./mvnw install:install-file -Dfile=libs/RewardCentral.jar -DgroupId=rewardCentral -DartifactId=rewardCentral -Dversion=1.0.0 -Dpackaging=jar
+      - run: ./mvnw install:install-file -Dfile=libs/TripPricer.jar -DgroupId=tripPricer -DartifactId=tripPricer -Dversion=1.0.0 -Dpackaging=jar
       - run: ./mvnw test
 
   package_job:
@@ -41,6 +47,9 @@ jobs:
           java-version: '17'
           cache: maven
       - run: chmod +x mvnw
+      - run: ./mvnw install:install-file -Dfile=libs/gpsUtil.jar -DgroupId=gpsUtil -DartifactId=gpsUtil -Dversion=1.0.0 -Dpackaging=jar
+      - run: ./mvnw install:install-file -Dfile=libs/RewardCentral.jar -DgroupId=rewardCentral -DartifactId=rewardCentral -Dversion=1.0.0 -Dpackaging=jar
+      - run: ./mvnw install:install-file -Dfile=libs/TripPricer.jar -DgroupId=tripPricer -DartifactId=tripPricer -Dversion=1.0.0 -Dpackaging=jar
       - run: ./mvnw package
       - uses: actions/upload-artifact@v6
         with:
